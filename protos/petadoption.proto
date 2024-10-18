@@ -1,0 +1,58 @@
+// Copyright 2015 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+
+
+//>python -m grpc_tools.protoc -I "C:\Users\himan\Documents\Masters Program\First Semester\Distributed Systems\Assignments\Project Assignment 2\part3\protos" --python_out=. --pyi_out=. --grpc_python_out=. "C:\Users\himan\Documents\Masters Program\First Semester\Distributed Systems\Assignments\Project Assignment 2\part3\protos\petadoption.proto"
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.helloworld";
+option java_outer_classname = "HelloWorldProto";
+option objc_class_prefix = "HLW";
+
+
+service PetAdoption{
+
+    rpc RegisterPet(PetRequests) returns (RegisterResponse);
+    rpc SearchPet(SearchRequest) returns (PetListResponse);
+  
+  }
+  
+  message PetRequests{  //This message will have all the necessary information of pet while registering it for the adoption
+    string name = 1;
+    string gender = 2;
+    string age = 3;
+    string breed = 4;
+    
+    //bytes optional for testing
+
+    // bytes image = 0; //image will be converted to bytes and will be sent through the network and will be stored as bytes. The image will be unpacked on the client side if requested
+  }
+  
+  message PetListResponse {
+    repeated PetRequests pets = 1;  //the server will return a list of pets to client so we need to model that in our proto file as a list of PetRequests
+  }
+  message SearchRequest{
+    // testing string data type
+    // map<string, string>type = 1; //should we use a dict here or just do type variable
+    string type = 1; //either this or the above line
+    string query = 2; 
+  }
+  
+  message RegisterResponse {
+    string status = 1;
+  }
+  
