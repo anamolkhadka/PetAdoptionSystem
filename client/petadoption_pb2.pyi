@@ -5,34 +5,36 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
-class PetRequests(_message.Message):
-    __slots__ = ("name", "gender", "age", "breed")
+class PetInfo(_message.Message):
+    __slots__ = ("name", "gender", "age", "breed", "picture")
     NAME_FIELD_NUMBER: _ClassVar[int]
     GENDER_FIELD_NUMBER: _ClassVar[int]
     AGE_FIELD_NUMBER: _ClassVar[int]
     BREED_FIELD_NUMBER: _ClassVar[int]
+    PICTURE_FIELD_NUMBER: _ClassVar[int]
     name: str
     gender: str
-    age: str
+    age: int
     breed: str
-    def __init__(self, name: _Optional[str] = ..., gender: _Optional[str] = ..., age: _Optional[str] = ..., breed: _Optional[str] = ...) -> None: ...
+    picture: bytes
+    def __init__(self, name: _Optional[str] = ..., gender: _Optional[str] = ..., age: _Optional[int] = ..., breed: _Optional[str] = ..., picture: _Optional[bytes] = ...) -> None: ...
 
-class PetListResponse(_message.Message):
-    __slots__ = ("pets",)
-    PETS_FIELD_NUMBER: _ClassVar[int]
-    pets: _containers.RepeatedCompositeFieldContainer[PetRequests]
-    def __init__(self, pets: _Optional[_Iterable[_Union[PetRequests, _Mapping]]] = ...) -> None: ...
+class RegistrationResponse(_message.Message):
+    __slots__ = ("success", "message")
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    success: bool
+    message: str
+    def __init__(self, success: bool = ..., message: _Optional[str] = ...) -> None: ...
 
 class SearchRequest(_message.Message):
-    __slots__ = ("type", "query")
-    TYPE_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ("query",)
     QUERY_FIELD_NUMBER: _ClassVar[int]
-    type: str
     query: str
-    def __init__(self, type: _Optional[str] = ..., query: _Optional[str] = ...) -> None: ...
+    def __init__(self, query: _Optional[str] = ...) -> None: ...
 
-class RegisterResponse(_message.Message):
-    __slots__ = ("status",)
-    STATUS_FIELD_NUMBER: _ClassVar[int]
-    status: str
-    def __init__(self, status: _Optional[str] = ...) -> None: ...
+class PetList(_message.Message):
+    __slots__ = ("pets",)
+    PETS_FIELD_NUMBER: _ClassVar[int]
+    pets: _containers.RepeatedCompositeFieldContainer[PetInfo]
+    def __init__(self, pets: _Optional[_Iterable[_Union[PetInfo, _Mapping]]] = ...) -> None: ...

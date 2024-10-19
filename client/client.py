@@ -18,29 +18,31 @@ from __future__ import print_function
 import logging
 # from datetime import datetime
 import grpc
-import petadoption_pb2
-import petadoption_pb2_grpc
+import petAdoption_pb2
+import petAdoption_pb2_grpc
 
 
 def run():
-
-    
 
     with grpc.insecure_channel('localhost:50051') as channel:
         name=input("Enter the pet's Name: ")
         gender=input("Enter the gender of your pet(M/F): ") 
         age=input("Enter the age of your pet: ")
         breed=input("Enter the breed of your dog: ")
-        stub = petadoption_pb2_grpc.PetAdoptionStub(channel)
-        response = stub.RegisterPet(petadoption_pb2.PetRequests(name=name, gender=gender, age=age, breed=breed))
+        pic = bytes('svome string of pic')
+        
+        stub = petAdoption_pb2_grpc.PetAdoptionStub(channel)
+        response = stub.RsegisterPet(petAdoption_pb2.PetInfo(name=name, gender=gender, age=int(age), breed=breed, picture=pic))
         # response = stub.RegisterPet(petadoption_pb2.PetRequests(name='Pluto', gender='M', age='12', breed='pet'))
-        if response.status == '1':
+        if response.success:
             print(f"Pet Registered Successfully")
         else:
             print("Some error occured")
-        
-        # response = stub.TellDate(teller_pb2.DateRequest(name='Himanshu'))
-        # print(f"Date requested and got reponse: {response.name}")
+        search = 'pluto'
+        pet_list = stub.SearchPet(petAdoption_pb2.SearchRequest(query='pluto'))
+        for pet in pet_list:
+            print(pet)
+       
 
 # def run():
 #     # NOTE(gRPC Python Team): .close() is possible on a channel and should be

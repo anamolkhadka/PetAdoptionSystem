@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-import petadoption_pb2 as petadoption__pb2
+import petAdoption_pb2 as petAdoption__pb2
 
 GRPC_GENERATED_VERSION = '1.66.2'
 GRPC_VERSION = grpc.__version__
@@ -18,14 +18,14 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in petadoption_pb2_grpc.py depends on'
+        + f' but the generated code in petAdoption_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
     )
 
 
-class PetAdoptionStub(object):
+class PetAdoptionServiceStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -35,54 +35,56 @@ class PetAdoptionStub(object):
             channel: A grpc.Channel.
         """
         self.RegisterPet = channel.unary_unary(
-                '/PetAdoption/RegisterPet',
-                request_serializer=petadoption__pb2.PetRequests.SerializeToString,
-                response_deserializer=petadoption__pb2.RegisterResponse.FromString,
+                '/petadoption.PetAdoptionService/RegisterPet',
+                request_serializer=petAdoption__pb2.PetInfo.SerializeToString,
+                response_deserializer=petAdoption__pb2.RegistrationResponse.FromString,
                 _registered_method=True)
         self.SearchPet = channel.unary_unary(
-                '/PetAdoption/SearchPet',
-                request_serializer=petadoption__pb2.SearchRequest.SerializeToString,
-                response_deserializer=petadoption__pb2.PetListResponse.FromString,
+                '/petadoption.PetAdoptionService/SearchPet',
+                request_serializer=petAdoption__pb2.SearchRequest.SerializeToString,
+                response_deserializer=petAdoption__pb2.PetList.FromString,
                 _registered_method=True)
 
 
-class PetAdoptionServicer(object):
+class PetAdoptionServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def RegisterPet(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Register a pet.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def SearchPet(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Search for a pet.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_PetAdoptionServicer_to_server(servicer, server):
+def add_PetAdoptionServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'RegisterPet': grpc.unary_unary_rpc_method_handler(
                     servicer.RegisterPet,
-                    request_deserializer=petadoption__pb2.PetRequests.FromString,
-                    response_serializer=petadoption__pb2.RegisterResponse.SerializeToString,
+                    request_deserializer=petAdoption__pb2.PetInfo.FromString,
+                    response_serializer=petAdoption__pb2.RegistrationResponse.SerializeToString,
             ),
             'SearchPet': grpc.unary_unary_rpc_method_handler(
                     servicer.SearchPet,
-                    request_deserializer=petadoption__pb2.SearchRequest.FromString,
-                    response_serializer=petadoption__pb2.PetListResponse.SerializeToString,
+                    request_deserializer=petAdoption__pb2.SearchRequest.FromString,
+                    response_serializer=petAdoption__pb2.PetList.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'PetAdoption', rpc_method_handlers)
+            'petadoption.PetAdoptionService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('PetAdoption', rpc_method_handlers)
+    server.add_registered_method_handlers('petadoption.PetAdoptionService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
-class PetAdoption(object):
+class PetAdoptionService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -99,9 +101,9 @@ class PetAdoption(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/PetAdoption/RegisterPet',
-            petadoption__pb2.PetRequests.SerializeToString,
-            petadoption__pb2.RegisterResponse.FromString,
+            '/petadoption.PetAdoptionService/RegisterPet',
+            petAdoption__pb2.PetInfo.SerializeToString,
+            petAdoption__pb2.RegistrationResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -126,9 +128,9 @@ class PetAdoption(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/PetAdoption/SearchPet',
-            petadoption__pb2.SearchRequest.SerializeToString,
-            petadoption__pb2.PetListResponse.FromString,
+            '/petadoption.PetAdoptionService/SearchPet',
+            petAdoption__pb2.SearchRequest.SerializeToString,
+            petAdoption__pb2.PetList.FromString,
             options,
             channel_credentials,
             insecure,
