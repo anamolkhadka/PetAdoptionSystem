@@ -60,7 +60,22 @@ public class PetAdoptionServer {
         // Here if the client requests for registerPet or searchPet, gRPC assigns separate thread for different clients.
         @Override
         public void registerPet(PetInfo request, StreamObserver<RegistrationResponse> responseObserver) {
-            // Add the new pet to the in-memory database
+            // Validate the input
+            if (request.getName().isEmpty() || request.getGender().isEmpty() ||
+                request.getAge() <= 0 || request.getBreed().isEmpty() ||
+                request.getPicture().isEmpty()) {
+                    
+                // Return a failure response if any required field is missing
+                RegistrationResponse response = RegistrationResponse.newBuilder()
+                        .setSuccess(false)
+                        .setMessage("All fields (name, gender, age, breed, and picture) are required.")
+                        .build();
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+                return;
+            }
+
+            // // If all fields are valid, add the new pet to the in-memory database
             petDatabase.add(request);
             RegistrationResponse response = RegistrationResponse.newBuilder()
                     .setSuccess(true)
@@ -68,6 +83,7 @@ public class PetAdoptionServer {
                     .build();
             responseObserver.onNext(response);
             responseObserver.onCompleted();
+
         }
 
         @Override
