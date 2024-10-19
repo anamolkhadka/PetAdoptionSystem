@@ -1,0 +1,36 @@
+Test Examples for Pet Registration
+
+Pet 1:
+Name: Buddy
+Gender: Male
+Age: 3
+Breed: Labrador Retriever
+Image: buddy.jpg (make sure this image is in the client_2/images folder)
+
+Pet 2:
+Name: Daisy
+Gender: Female
+Age: 2
+Breed: Beagle
+Image: daisy.jpg
+
+Pet 3:
+Name: Max
+Gender: Male
+Age: 1
+Breed: German Shepherd
+Image: max.jpg
+
+Pet 4:
+Name: Bella
+Gender: Female
+Age: 4
+Breed: Poodle
+Image: bella.jpg
+
+Pet 5:
+Name: Charlie
+Gender: Male
+Age: 5
+Breed: Bulldog
+Image: charlie.jpg
