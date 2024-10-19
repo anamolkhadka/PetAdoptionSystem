@@ -25,24 +25,49 @@ import petAdoption_pb2_grpc
 def run():
 
     with grpc.insecure_channel('localhost:50051') as channel:
-        name=input("Enter the pet's Name: ")
-        gender=input("Enter the gender of your pet(M/F): ") 
-        age=input("Enter the age of your pet: ")
-        breed=input("Enter the breed of your dog: ")
-        pic = bytes('svome string of pic')
         
-        stub = petAdoption_pb2_grpc.PetAdoptionStub(channel)
-        response = stub.RsegisterPet(petAdoption_pb2.PetInfo(name=name, gender=gender, age=int(age), breed=breed, picture=pic))
-        # response = stub.RegisterPet(petadoption_pb2.PetRequests(name='Pluto', gender='M', age='12', breed='pet'))
-        if response.success:
-            print(f"Pet Registered Successfully")
-        else:
-            print("Some error occured")
-        search = 'pluto'
-        pet_list = stub.SearchPet(petAdoption_pb2.SearchRequest(query='pluto'))
-        for pet in pet_list:
-            print(pet)
-       
+        
+        stub = petAdoption_pb2_grpc.PetAdoptionServiceStub(channel)
+        while True:
+            print("Welcome to Pet Adoption Service. Please Select from one of the options below")
+            print("1.Register a Pet\n2.Search for a Pet\n3.Exit")
+            cl_input = int(input("Enter your response:"))
+            if cl_input == 1:
+                print("Thank you for choosing the pet registration service, you can register your pet for adoption by adding the following details")
+                name=input("Enter the pet's Name: ")
+                gender=input("Enter the gender of your pet(M/F): ") 
+                age=int(input("Enter the age of your pet: "))
+                breed=input("Enter the breed of your dog: ")
+                pic = input("Please paste the full path of the image you want to upload for you pet: ")
+                with open(pic[1:-1], 'rb') as file:
+                    image_data = file.read()
+                pic = image_data
+                response = stub.RegisterPet(petAdoption_pb2.PetInfo(name=name, gender=gender, age=age, breed=breed, picture=pic))
+                if response.success:
+                    print("Your pet has been registered for adoption.")
+                else:
+                    print("Some error, Please try again")
+                    
+
+                                                           
+                #convert the path and make it into byte
+                #execute the register pet service
+
+
+            if cl_input == 2:
+                print("You have chosen to search for a Pet (either by name, gender, age, breed)")
+                query = input("Search key: ")
+                pet_list = stub.SearchPet(petAdoption_pb2.SearchRequest(query=query))
+                if pet_list.pets:
+                    print("Match(s) found, here are the pets matching the search criteria")
+                    for pet in pet_list.pets:
+                        print(f"Name: {pet.name}, Gender: {pet.gender}, Age: {pet.age}, Breed: {pet.breed}, Picture: {pet.picture[:10]}", end=" ")
+                else:
+                    print("No results found with entered criteria, please try again")
+                # execute the search method
+
+            if cl_input == 3:
+                break
 
 # def run():
 #     # NOTE(gRPC Python Team): .close() is possible on a channel and should be
