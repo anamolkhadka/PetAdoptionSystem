@@ -28,7 +28,9 @@
 - Run command 'python client.py'.
 - Follow the program logic as shown in the screenShots inside screenShot folder.
 - For pet information check petInfo.txt inside the client_2.
-- For images file name look at the images direcotry inside th client_2 and provide those corresponding image names as shown in the petInfo.txt examples.
+- For images file name look at the images directory inside th client_2 and provide those corresponding image names as shown in the petInfo.txt examples.
+- Note the image preview of the first 20 bytes might look the same for different dog's images due to the fact that both are same file format and the first bytes are the meta data.
+- However, the total size of each of the pictures in bytes are different to distinguish that the images are different.
 
 ### Database
 - The server is using in-memory database using an Array List of type PetInfo.
@@ -38,7 +40,8 @@
 
 ### Write 5 different test cases for your developed pet adoption system.
 - The test cases are in the test.py python file inside the client_2 directory.
-- To run the test cases, while the Java server is running in one terminal like mentioned above, open another terminal cd to 'client_2' folder.
+- To run the test cases, first exit the server to clear the in-memory storage for avoiding duplicates.
+- The run the java backend server in one terminal like mentioned above, open another terminal cd to 'client_2' folder.
 - Run command 'python test.py' same as running 'client.py' as described above.
 - See the TestCases screenshot in the screenshots directory.
 - For details about the test cases open the test.py file and read different test cases comments.

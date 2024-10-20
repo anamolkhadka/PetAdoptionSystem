@@ -66,7 +66,8 @@ def run():
                     print("\nMatching Pets Found:")
                     for pet in pet_list.pets:
                         print(f"Name: {pet.name}, Gender: {pet.gender}, Age: {pet.age}, Breed: {pet.breed}")
-                        print(f"Image preview (first 10 bytes): {pet.picture[:10]}\n")
+                        print(f"Image size (in bytes): {len(pet.picture)}")
+                        print(f"Image preview (first 20 bytes): {pet.picture[:20]}\n")
                 else:
                     print("No pets found matching the search criteria.")
 
